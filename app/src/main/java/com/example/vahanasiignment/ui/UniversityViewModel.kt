@@ -1,4 +1,4 @@
-package com.example.vahanasiignment
+package com.example.vahanasiignment.ui
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData

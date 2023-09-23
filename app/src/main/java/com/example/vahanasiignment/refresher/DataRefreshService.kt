@@ -1,19 +1,15 @@
-package com.example.vahanasiignment
+package com.example.vahanasiignment.refresher
 
 import android.app.*
 import android.content.Context
-import android.content.Intent
 import android.os.Build
 import android.os.Handler
-import android.os.IBinder
-import android.os.Looper
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.lifecycle.LifecycleService
-import androidx.lifecycle.lifecycleScope
+import com.example.vahanasiignment.R
 import com.example.vahanasiignment.repository.UniversityRepository
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import com.example.vahanasiignment.ui.UniversityViewModel
 
 class DataRefreshService : LifecycleService() {
 
@@ -47,14 +43,12 @@ class DataRefreshService : LifecycleService() {
         val notification = NotificationCompat.Builder(this, channelId)
             .setContentTitle("API Refresh Service")
             .setContentText("Refreshing API every 10 seconds")
-            .setSmallIcon(R.drawable.ic_launcher_foreground) // Change this to your app's icon
+            .setSmallIcon(R.drawable.ic_launcher_foreground)
             .build()
 
 
         startForeground(notificationId, notification)
 
-        // Start periodic API refresh
-        //handler.postDelayed(refreshRunnable, refreshInterval)
         startRefreshTimer()
     }
 
@@ -62,7 +56,7 @@ class DataRefreshService : LifecycleService() {
     private val refreshRunnable = object : Runnable {
         override fun run() {
             Log.d("APIRefresh", "Starting API refresh...")
-            viewModel.getUniversity() // Assuming this function updates your LiveData
+            viewModel.getUniversity()
             Log.d("APIRefresh", "API refresh completed.")
 
             // Schedule the next refresh

@@ -1,12 +1,12 @@
-package com.example.vahanasiignment
+package com.example.vahanasiignment.ui
 
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import com.airbnb.lottie.LottieAnimationView
 import com.example.vahanasiignment.databinding.ActivitySplashScreenBinding
-import com.example.vahanasiignment.ui.MainActivity
 
 class SplashScreen : AppCompatActivity() {
     lateinit var binding: ActivitySplashScreenBinding
@@ -16,6 +16,7 @@ class SplashScreen : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySplashScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
 
         lottieAnimationView = binding.lottieanim
 
@@ -29,24 +30,7 @@ class SplashScreen : AppCompatActivity() {
             finish()
         }, 3000)
     }
-//        binding.lottieanim.addAnimatorListener(object : Animator.AnimatorListener{
-//            override fun onAnimationStart(p0: Animator?) {
-//
-//            }
-//
-//            override fun onAnimationEnd(p0: Animator?) {
-//                val intent = Intent(this@SplashScreen,MainActivity::class.java)
-//                startActivity(intent)
-//            }
-//
-//            override fun onAnimationCancel(p0: Animator?) {
-//
-//            }
-//
-//            override fun onAnimationRepeat(p0: Animator?) {
-//
-//            }
-//        })
+
 
     /*android:exported="true">
     <intent-filter>
