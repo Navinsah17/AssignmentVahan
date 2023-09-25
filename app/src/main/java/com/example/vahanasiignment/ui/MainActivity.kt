@@ -1,6 +1,8 @@
 package com.example.vahanasiignment.ui
 
 import android.Manifest
+import android.app.ActivityManager
+import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
@@ -9,6 +11,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
@@ -37,6 +41,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         onClickRequestPermission(binding.root)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        supportActionBar?.title = ""
+        setSupportActionBar(binding.toolbar)
         /*if (!NotificationManagerCompat.from(this).areNotificationsEnabled()) {
             // Request notification permission here
             showNotificationPermissionDialog()
@@ -55,7 +61,53 @@ class MainActivity : AppCompatActivity() {
         startService(serviceIntent)
 
 
+    }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.notification_menu, menu);
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        when(item.itemId){
+            /*R.id.notifaction_Off->{
+                if(isMyServiceRunning()){
+                    val serviceIntent = Intent(this, DataRefreshService::class.java)
+                    stopService(serviceIntent)
+                }
+                return true
+            }*/
+            R.id.notifaction_On->{
+                val serviceIntent = Intent(this, DataRefreshService::class.java)
+                if (!isMyServiceRunning()){
+                    startService(serviceIntent)
+
+                }else{
+                    stopService(serviceIntent)
+
+                }
+                return true
+
+            }
+            else -> return super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun isMyServiceRunning(): Boolean{
+
+        val manager: ActivityManager = getSystemService(
+            Context.ACTIVITY_SERVICE) as ActivityManager
+
+        for (service : ActivityManager.RunningServiceInfo in
+        manager.getRunningServices(Integer.MAX_VALUE)){
+
+            if(DataRefreshService::class.java.name == service.service.className){
+                return true
+            }
+
+        }
+        return false
 
     }
 

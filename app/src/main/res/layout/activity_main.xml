@@ -13,6 +13,7 @@
             app:title="EduReach"
             android:background="#617C8C"
             android:theme="@style/ToolbarTheme"
+            app:menu="@menu/notification_menu"
             app:layout_constraintTop_toTopOf="parent" />
 
 

@@ -70,7 +70,9 @@ class DataRefreshService : LifecycleService() {
 
 
 
-    private val refreshHandler = Handler()
+
+
+    private var refreshHandler = Handler()
     private val refreshRunnable = object : Runnable {
         override fun run() {
             Log.d("APIRefresh", "Starting API refresh...")
@@ -87,6 +89,34 @@ class DataRefreshService : LifecycleService() {
         }
     }
 
+    private fun startService() {
+        // Implement the logic to start your service here
+
+        // Create a notification channel (for Android Oreo and higher)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(
+                channelId,
+                "API Refresh Channel",
+                NotificationManager.IMPORTANCE_HIGH
+            )
+            val notificationManager =
+                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
+
+        // Build and show the notification
+        val notification = NotificationCompat.Builder(this, channelId)
+            .setContentTitle("API Refresh Service")
+            .setContentText("Refreshing API every 10 seconds")
+            .setSmallIcon(R.drawable.ic_launcher_foreground) // Change this to your app's icon
+            .build()
+
+        startForeground(notificationId, notification)
+
+        // Initialize and start the refresh timer
+        refreshHandler = Handler()
+        refreshHandler.postDelayed(refreshRunnable, refreshInterval)
+    }
 // ...
 
     private fun startRefreshTimer() {
