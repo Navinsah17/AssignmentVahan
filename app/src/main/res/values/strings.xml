@@ -9,4 +9,5 @@
     <string name="retry">Retry</string>
     <string name="action_notification_on">ON</string>
     <string name="action_notification_off">OFF</string>
+    <string name="notification">notification</string>
 </resources>
